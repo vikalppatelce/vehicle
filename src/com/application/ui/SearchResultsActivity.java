@@ -1,24 +1,25 @@
 package com.application.ui;
 
-import it.sephiroth.horizontallistview.HListView;
-
 import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.application.R;
-import com.application.ui.adapters.FuelTypeAdapter;
-import com.application.ui.adapters.MakeAdapter;
-import com.application.ui.view.ScrollableGridView;
+import com.application.ui.adapters.SearchResultAdapter;
+import com.application.ui.view.SpeedScrollListener;
 import com.application.ui.view.VahanIndiaProgressDialog;
 import com.balysv.materialmenu.MaterialMenuDrawable.IconState;
 import com.balysv.materialmenu.MaterialMenuView;
@@ -26,38 +27,36 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnCloseListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenListener;
 
-public class SearchNewCarActivity extends BaseSliderActivity {
+public class SearchResultsActivity extends BaseSliderActivity {
 
-	private static String TAG = SearchNewCarActivity.class.getSimpleName();
+	private static String TAG = SearchResultsActivity.class.getSimpleName();
 
+	private TextView mSlideMenuTxt;
 	private SlidingMenu mSlideMenu;
 	private ActionBar mActionBar;
-	private HListView mHListView;
-	private ScrollableGridView mGridView;
 	private VahanIndiaProgressDialog mProgressDialog;
 	private MaterialMenuView materialMenu;
-	
-	private ArrayList<String> mArrayListMakeType;
-	private boolean[] mFuelType;
 
-	private Button mSearchBtn;
-	private TextView mTitle;
-	
-	private FuelTypeAdapter mHListViewAdapter;
-	private MakeAdapter mGridViewAdapter;
-	
+	private ListView mListView;
+	private SearchResultAdapter mAdapter;
+	private SpeedScrollListener mScrollListener;
+	private ArrayList<String> mArrayList;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_car_search);
+		setContentView(R.layout.activity_search_results);
+
 		mSlideMenu = getSlidingMenu();
 		mActionBar = getSupportActionBar();
 		initSlideMenu();
 		setCustomActionBar();
-		initUi();
-		initObj();
 		setSlideMenuDrawerOpenCloseListener();
+
+		initUi();
+		setAdapters();
+
 		mProgressDialog = new VahanIndiaProgressDialog(this);
 		mProgressDialog.show();
 
@@ -69,9 +68,6 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 				mProgressDialog.dismiss();
 			}
 		}, 5000);
-		
-		setUiEventListener();
-		setAdapter();
 	}
 
 	private void setCustomActionBar() {
@@ -85,27 +81,7 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 		mActionBar.setDisplayShowCustomEnabled(true);
 		materialMenu = (MaterialMenuView) mCustomView
 				.findViewById(R.id.action_bar_menu);
-		mTitle = (TextView)mCustomView.findViewById(R.id.action_bar_menu_title);
-		mTitle.setText("Search New Car");
 		setSlideMenuListener();
-	}
-
-	private void initUi() {
-		mHListView = (HListView) findViewById(R.id.hlistview);
-		mGridView = (ScrollableGridView)findViewById(R.id.activity_new_car_search_gridview);
-		mSearchBtn = (Button)findViewById(R.id.search);
-	}
-
-	private void initObj(){
-		mArrayListMakeType = new ArrayList<String>();
-	}
-	
-	private void setAdapter() {
-		mHListViewAdapter = new FuelTypeAdapter(SearchNewCarActivity.this);
-		mGridViewAdapter = new MakeAdapter(SearchNewCarActivity.this, 15, false);
-		mGridView.setExpanded(true);
-		mHListView.setAdapter(mHListViewAdapter);
-		mGridView.setAdapter(mGridViewAdapter);
 	}
 
 	private void setSlideMenuDrawerOpenCloseListener() {
@@ -125,22 +101,7 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 			}
 		});
 	}
-	
-	private void setUiEventListener(){
-		mSearchBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mArrayListMakeType.clear();
-				mArrayListMakeType = mGridViewAdapter.getSelectedMake();
-				mFuelType = mHListViewAdapter.getSelectedFuelType();
-				
-				Intent mIntent = new Intent(SearchNewCarActivity.this, SearchResultsActivity.class);
-				startActivity(mIntent);
-			}
-		});
-	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
@@ -157,6 +118,7 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 	}
 
 	private void initSlideMenu() {
+		mSlideMenuTxt = (TextView) findViewById(R.id.slider_menu_new_car);
 	}
 
 	private void setSlideMenuListener() {
@@ -169,6 +131,16 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 			}
 		});
 
+		mSlideMenuTxt.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent mIntent = new Intent(SearchResultsActivity.this,
+						SearchNewCarActivity.class);
+				startActivity(mIntent);
+			}
+		});
 	}
 
 	public void toggleSlideMenuWithAnimation() {
@@ -178,5 +150,52 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 			materialMenu.animateState(IconState.ARROW);
 		}
 		mSlideMenu.toggle();
+	}
+
+	private void initUi() {
+		mListView = (ListView) findViewById(R.id.activity_search_result_listview);
+	}
+
+	private void setAdapters() {
+		mScrollListener = new SpeedScrollListener();
+		mArrayList = new ArrayList<String>();
+		for (int i = 0; i < 5; i++) {
+			mArrayList.add(" " + i);
+		}
+		mAdapter = new SearchResultAdapter(this, mScrollListener, mArrayList);
+		mListView.setAdapter(mAdapter);
+
+		setScrollListenerAdapter();
+	}
+
+	private void setScrollListenerAdapter() {
+		mListView.setOnScrollListener(new OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+				if (firstVisibleItem + visibleItemCount == totalItemCount
+						&& totalItemCount != 0) {
+					synchronized (this) {
+						getLoadMoreData();
+					}
+				}
+			}
+		});
+	}
+
+	private void getLoadMoreData() {
+		for (int i = 0; i < 10; i++) {
+			mArrayList.add("" + i);
+		}
+
+		runOnUiThread(new Runnable() {
+			public void run() {
+				mAdapter.addItems(mArrayList);
+				mAdapter.notifyDataSetChanged();
+			}
+		});
 	}
 }
