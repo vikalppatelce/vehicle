@@ -8,5 +8,6 @@
     <dimen name="shadow_width">15dp</dimen>
   <dimen name="mm_up_arrow_margin">-16dp</dimen>
     <integer name="num_cols">1</integer>
+    <dimen name="size_search_header">12sp</dimen>
 
 </resources>

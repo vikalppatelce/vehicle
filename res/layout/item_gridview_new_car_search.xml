@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="106.0dip" >
+
+    <FrameLayout
+        android:id="@+id/item_gridview_new_car_search_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="visible" >
+
+        <ImageView
+            android:id="@+id/item_gridview_new_car_search_iv"
+            android:layout_width="106dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/electric_black" />
+
+        <ImageView
+            android:id="@+id/item_gridview_new_car_search_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:clickable="false"
+            android:padding="7dp"
+            android:src="@drawable/checkbox_unchecked" />
+
+        <TextView
+            android:id="@+id/item_gridview_new_car_searc_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Suzuki" />
+
+        <View
+            android:id="@+id/item_gridview_new_car_search_v"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/item_gridview_new_car_search_tv_more_less"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="More"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

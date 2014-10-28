@@ -119,41 +119,46 @@ public class Utilities {
 		}
 	}
 
-	@SuppressLint("NewApi") public static double checkDisplaySize() {
-        try {
-            WindowManager manager = (WindowManager)ApplicationLoader.applicationContext.getSystemService(Context.WINDOW_SERVICE);
-            if (manager != null) {
-                Display display = manager.getDefaultDisplay();
-                if (display != null) {
-                    if(android.os.Build.VERSION.SDK_INT < 13) {
-                        displaySize.set(display.getWidth(), display.getHeight());
-                    } else {
-                        display.getSize(displaySize);
-                    }
-                    FileLog.e("tmessages", "display size = " + displaySize.x + " " + displaySize.y);
-                }
-            }
-            return Math.sqrt((displaySize.x * displaySize.x) + (displaySize.y * displaySize.y));
-        } catch (Exception e) {
-            FileLog.e("tmessages", e);
-            return 0;
-        }
-    }
-	
-	public static int getTrueFalsePer(int trueCount, int falseCount, int trueAdd, int falseAdd){
+	@SuppressLint("NewApi")
+	public static double checkDisplaySize() {
+		try {
+			WindowManager manager = (WindowManager) ApplicationLoader.applicationContext
+					.getSystemService(Context.WINDOW_SERVICE);
+			if (manager != null) {
+				Display display = manager.getDefaultDisplay();
+				if (display != null) {
+					if (android.os.Build.VERSION.SDK_INT < 13) {
+						displaySize
+								.set(display.getWidth(), display.getHeight());
+					} else {
+						display.getSize(displaySize);
+					}
+					FileLog.e("tmessages", "display size = " + displaySize.x
+							+ " " + displaySize.y);
+				}
+			}
+			return Math.sqrt((displaySize.x * displaySize.x)
+					+ (displaySize.y * displaySize.y));
+		} catch (Exception e) {
+			FileLog.e("tmessages", e);
+			return 0;
+		}
+	}
+
+	public static int getTrueFalsePer(int trueCount, int falseCount,
+			int trueAdd, int falseAdd) {
 		int total = trueCount + falseCount + trueAdd + falseAdd;
 		int truePer = 0;
 		try {
-			 truePer = ((trueCount + trueAdd) * 100) / total;
+			truePer = ((trueCount + trueAdd) * 100) / total;
 		} catch (ArithmeticException ae) {
 			Log.e(TAG, ae.toString());
-		}catch(Exception e){
+		} catch (Exception e) {
 			Log.e(TAG, e.toString());
 		}
 		return truePer;
 	}
-	
-	
+
 	public static Uri getImagePath() {
 		File imageDirectory = null;
 		String state = Environment.getExternalStorageState();
@@ -163,10 +168,11 @@ public class Utilities {
 			imageDirectory = new File(AppConstants.IMAGE_DIRECTORY_PATH_DATA);
 		}
 		imageDirectory.mkdirs();
-		File tempFile = new File(imageDirectory, getVideoName()+ AppConstants.EXTENSION);
+		File tempFile = new File(imageDirectory, getVideoName()
+				+ AppConstants.EXTENSION);
 		return Uri.fromFile(tempFile);
 	}
-	
+
 	public static Uri getVideoPath() {
 		File imageDirectory = null;
 		String state = Environment.getExternalStorageState();
@@ -181,7 +187,7 @@ public class Utilities {
 				+ AppConstants.VIDEO_EXTENSION);
 		return Uri.fromFile(tempFile);
 	}
-	
+
 	public static String getVideoName() {
 		String name = "Utilities";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -193,7 +199,7 @@ public class Utilities {
 		}
 		return name;
 	}
-	
+
 	public static void copy(File src, File dst) throws IOException {
 		InputStream in = new FileInputStream(src);
 		OutputStream out = new FileOutputStream(dst);
@@ -207,46 +213,77 @@ public class Utilities {
 		in.close();
 		out.close();
 	}
-	
+
 	public static void galleryAddPic(Context mContext, Uri currentFileUri) {
-	    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-	    File f = new File(currentFileUri.getPath());
-	    Uri contentUri = Uri.fromFile(f);
-	    mediaScanIntent.setData(contentUri);
-	    mContext.sendBroadcast(mediaScanIntent);
+		Intent mediaScanIntent = new Intent(
+				Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		File f = new File(currentFileUri.getPath());
+		Uri contentUri = Uri.fromFile(f);
+		mediaScanIntent.setData(contentUri);
+		mContext.sendBroadcast(mediaScanIntent);
 	}
-	
+
 	public static boolean isInternetConnected() {
-	    ConnectivityManager connectivityManager = (ConnectivityManager) ApplicationLoader.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+		ConnectivityManager connectivityManager = (ConnectivityManager) ApplicationLoader.applicationContext
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null
+				&& activeNetworkInfo.isConnectedOrConnecting();
 	}
-	
-	public static Bitmap getBitmapFromUri(Uri uri) throws FileNotFoundException,
-			IOException {
-		InputStream input = ApplicationLoader.applicationContext.getContentResolver().openInputStream(uri);
+
+	public static boolean isNetworkAvailable() {
+		boolean flag = false;
+		ConnectivityManager manager = (ConnectivityManager) ApplicationLoader.applicationContext
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		NetworkInfo info[] = manager.getAllNetworkInfo();
+		if (info != null) {
+			for (int i = 0; i < info.length; i++) {
+				if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+					flag = true;
+				}
+			}
+		}
+		return flag;
+	}
+
+	public static Bitmap getBitmapFromUri(Uri uri)
+			throws FileNotFoundException, IOException {
+		InputStream input = ApplicationLoader.applicationContext
+				.getContentResolver().openInputStream(uri);
 		BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 		bitmapOptions.inDither = true;
 		bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
-		input = ApplicationLoader.applicationContext.getContentResolver().openInputStream(uri);
+		input = ApplicationLoader.applicationContext.getContentResolver()
+				.openInputStream(uri);
 		Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
 		input.close();
 		return bitmap;
 	}
-	
+
 	public static String getDeviceId() {
-		TelephonyManager telephonyManager = (TelephonyManager) ApplicationLoader.getApplication().getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager telephonyManager = (TelephonyManager) ApplicationLoader
+				.getApplication().getApplicationContext()
+				.getSystemService(Context.TELEPHONY_SERVICE);
 		return telephonyManager.getDeviceId();
 	}
-	
-	public static String getSDKVersion(){
+
+	public static String getSDKVersion() {
 		return String.valueOf(Build.VERSION.SDK_INT);
 	}
-	
-	public static String getApplicationVersion(){
+
+	public static String getApplicationVersion() {
 		PackageInfo pInfo = null;
 		try {
-			pInfo = ApplicationLoader.getApplication().getApplicationContext().getPackageManager().getPackageInfo(ApplicationLoader.getApplication().getApplicationContext().getPackageName(), 0);
+			pInfo = ApplicationLoader
+					.getApplication()
+					.getApplicationContext()
+					.getPackageManager()
+					.getPackageInfo(
+							ApplicationLoader.getApplication()
+									.getApplicationContext().getPackageName(),
+							0);
 			return pInfo.versionName;
 		} catch (NameNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -254,8 +291,7 @@ public class Utilities {
 			return "VERSION NAME NOT FOUND";
 		}
 	}
-	
-	
+
 	public static String readFile(String s) {
 		BufferedReader r;
 		StringBuilder str = new StringBuilder();
@@ -273,25 +309,27 @@ public class Utilities {
 
 		return str.toString();
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	public static int getDeviceWidth(){
-		WindowManager wm = (WindowManager) ApplicationLoader.applicationContext.getSystemService(Context.WINDOW_SERVICE);
+	public static int getDeviceWidth() {
+		WindowManager wm = (WindowManager) ApplicationLoader.applicationContext
+				.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		return display.getWidth();
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	public static int getDeviceHeight(){
-		WindowManager wm = (WindowManager) ApplicationLoader.applicationContext.getSystemService(Context.WINDOW_SERVICE);
+	public static int getDeviceHeight() {
+		WindowManager wm = (WindowManager) ApplicationLoader.applicationContext
+				.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		return display.getHeight();
 	}
-	
-	public static int getDeviceGalleryFitWidth(){
+
+	public static int getDeviceGalleryFitWidth() {
 		return (int) (getDeviceWidth() * 1.47);
 	}
-	
+
 	public static String toHtml(Object object) {
 		StringBuilder stringBuilder = new StringBuilder(256);
 		try {
@@ -299,7 +337,8 @@ public class Utilities {
 				field.setAccessible(true);
 				Object val = field.get(object);
 				stringBuilder.append("<b>");
-				stringBuilder.append(field.getName().substring(1, field.getName().length()));
+				stringBuilder.append(field.getName().substring(1,
+						field.getName().length()));
 				stringBuilder.append(": ");
 				stringBuilder.append("</b>");
 				stringBuilder.append(val);
@@ -310,68 +349,85 @@ public class Utilities {
 		}
 		return stringBuilder.toString();
 	}
-	
+
 	public static void hideSoftKeyboard(Activity activity) {
 		InputMethodManager inputMethodManager = (InputMethodManager) activity
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+		inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
+				.getWindowToken(), 0);
 	}
-	
-	public static void logUserInfo(){
-		try{
-			Log.i(TAG, "Api key :"+ApplicationLoader.getPreferences().getApiKey());
-			Log.i(TAG, "UserName:"+ApplicationLoader.getPreferences().getUserName());
-			Log.i(TAG, "number  :"+ApplicationLoader.getPreferences().getUserNumber());
-			Log.i(TAG, "gender  :"+ApplicationLoader.getPreferences().getUserGender());
-			Log.i(TAG, "city_id :"+ApplicationLoader.getPreferences().getUserCityId());
-			Log.i(TAG, "city    :"+ApplicationLoader.getPreferences().getUserCity());
-			Log.i(TAG, "state_id:"+ApplicationLoader.getPreferences().getUserStateId());
-			Log.i(TAG, "state   :"+ApplicationLoader.getPreferences().getUserState());
-			Log.i(TAG, "country_:"+ApplicationLoader.getPreferences().getUserCountryId());
-			Log.i(TAG, "country :"+ApplicationLoader.getPreferences().getUserCountry());
-			Log.i(TAG, "pic     :"+ApplicationLoader.getPreferences().getProfilePicPath());
-		}catch(Exception e){
+
+	public static void logUserInfo() {
+		try {
+			Log.i(TAG, "Api key :"
+					+ ApplicationLoader.getPreferences().getApiKey());
+			Log.i(TAG, "UserName:"
+					+ ApplicationLoader.getPreferences().getUserName());
+			Log.i(TAG, "number  :"
+					+ ApplicationLoader.getPreferences().getUserNumber());
+			Log.i(TAG, "gender  :"
+					+ ApplicationLoader.getPreferences().getUserGender());
+			Log.i(TAG, "city_id :"
+					+ ApplicationLoader.getPreferences().getUserCityId());
+			Log.i(TAG, "city    :"
+					+ ApplicationLoader.getPreferences().getUserCity());
+			Log.i(TAG, "state_id:"
+					+ ApplicationLoader.getPreferences().getUserStateId());
+			Log.i(TAG, "state   :"
+					+ ApplicationLoader.getPreferences().getUserState());
+			Log.i(TAG, "country_:"
+					+ ApplicationLoader.getPreferences().getUserCountryId());
+			Log.i(TAG, "country :"
+					+ ApplicationLoader.getPreferences().getUserCountry());
+			Log.i(TAG, "pic     :"
+					+ ApplicationLoader.getPreferences().getProfilePicPath());
+		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
 	}
-	
-//	public static void logUserFacebookInfo(GraphUser user){
-//		Log.i(TAG,"User ID "+ user.getId());
-//        Log.i(TAG,"Username "+ user.asMap().get("username"));
-//        Log.i(TAG,"Email "+ user.asMap().get("email"));
-//        Log.i(TAG,"Name "+ user.asMap().get("name"));
-//        Log.i(TAG,"First Name "+ user.asMap().get("first_name"));
-//        Log.i(TAG,"Last Name "+ user.asMap().get("last_name"));
-//        Log.i(TAG,"Gender "+ user.asMap().get("gender"));
-//        Log.i(TAG,"Location "+ user.asMap().get("location"));
-//	}
-	
-//	public static void errorApi(RelativeLayout mNoDataLayout, TextView mNoDataTxt){
-//		mNoDataLayout.setVisibility(View.VISIBLE);
-// 	    mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_api));
-//	}
-//	
-//	public static void errorNoData(RelativeLayout mNoDataLayout, TextView mNoDataTxt){
-//		mNoDataLayout.setVisibility(View.VISIBLE);
-// 	    mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_no_data));
-//	}
-//	
-//	public static void errorApiGone(RelativeLayout mNoDataLayout, TextView mNoDataTxt){
-//		mNoDataLayout.setVisibility(View.GONE);
-// 	    mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_no_data));
-//	}
-//	
-//	public static void errorNoDataGone(RelativeLayout mNoDataLayout, TextView mNoDataTxt){
-//		mNoDataLayout.setVisibility(View.GONE);
-// 	    mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_no_data));
-//	}
-	
-	public static int getNotificationCount(){
+
+	// public static void logUserFacebookInfo(GraphUser user){
+	// Log.i(TAG,"User ID "+ user.getId());
+	// Log.i(TAG,"Username "+ user.asMap().get("username"));
+	// Log.i(TAG,"Email "+ user.asMap().get("email"));
+	// Log.i(TAG,"Name "+ user.asMap().get("name"));
+	// Log.i(TAG,"First Name "+ user.asMap().get("first_name"));
+	// Log.i(TAG,"Last Name "+ user.asMap().get("last_name"));
+	// Log.i(TAG,"Gender "+ user.asMap().get("gender"));
+	// Log.i(TAG,"Location "+ user.asMap().get("location"));
+	// }
+
+	// public static void errorApi(RelativeLayout mNoDataLayout, TextView
+	// mNoDataTxt){
+	// mNoDataLayout.setVisibility(View.VISIBLE);
+	// mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_api));
+	// }
+	//
+	// public static void errorNoData(RelativeLayout mNoDataLayout, TextView
+	// mNoDataTxt){
+	// mNoDataLayout.setVisibility(View.VISIBLE);
+	// mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_no_data));
+	// }
+	//
+	// public static void errorApiGone(RelativeLayout mNoDataLayout, TextView
+	// mNoDataTxt){
+	// mNoDataLayout.setVisibility(View.GONE);
+	// mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_no_data));
+	// }
+	//
+	// public static void errorNoDataGone(RelativeLayout mNoDataLayout, TextView
+	// mNoDataTxt){
+	// mNoDataLayout.setVisibility(View.GONE);
+	// mNoDataTxt.setText(ApplicationLoader.getApplication().getResources().getString(R.string.error_no_data));
+	// }
+
+	public static int getNotificationCount() {
 		return ApplicationLoader
 				.getApplication()
 				.getContentResolver()
 				.query(DBConstant.Notification_Columns.CONTENT_URI,
 						null,
-						DBConstant.Notification_Columns.COLUMN_READ_STATUS+ "=?",  new String[]{"0"}, null).getCount();
+						DBConstant.Notification_Columns.COLUMN_READ_STATUS
+								+ "=?", new String[] { "0" }, null).getCount();
 	}
 }

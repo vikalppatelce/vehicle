@@ -1,28 +1,60 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <declare-styleable name="MaterialMenuView">
-        <attr name="mm_color" format="color" />
-        <attr name="mm_scale" format="integer" />
-        <attr name="mm_transformDuration" format="integer" />
-        <attr name="mm_pressedDuration" format="integer" />
-        <attr name="mm_strokeWidth" format="integer" />
-        <attr name="mm_rtlEnabled" format="boolean" />
-    </declare-styleable>
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme">
+    <style name="AppBaseTheme" parent="@style/Theme.Sherlock.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="AppTheme_Slider_TextView">
+        <item name="android:padding">7dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="transparentProgressDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+
+    <style name="AppTheme_Search_Header">
+        <item name="android:textColor">@color/color_search_header_text</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">@dimen/size_search_header</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme_RangeBar_Header">
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">@dimen/size_search_header</item>
+    </style>
+
+    <style name="AppTheme_TextView_Normal">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AppTheme_TextView_Bold">
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

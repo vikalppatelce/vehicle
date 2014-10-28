@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="50" android:drawable="@drawable/oneanim" />
+    <item android:duration="50" android:drawable="@drawable/twoanim" />
+    <item android:duration="50" android:drawable="@drawable/threeanim" />
+    <item android:duration="50" android:drawable="@drawable/fouranim" />
+    <item android:duration="50" android:drawable="@drawable/fiveanim" />
+    <item android:duration="50" android:drawable="@drawable/sixanim" />
+    <item android:duration="50" android:drawable="@drawable/sevenanim" />
+    <item android:duration="50" android:drawable="@drawable/eightanim" />
+    <item android:duration="50" android:drawable="@drawable/nineanim" />
+    <item android:duration="50" android:drawable="@drawable/tenanim" />
+    <item android:duration="50" android:drawable="@drawable/elevenanim" />
+    <item android:duration="50" android:drawable="@drawable/twelveanim" />
+    <item android:duration="50" android:drawable="@drawable/thirteenanim" />
+    <item android:duration="50" android:drawable="@drawable/fourteenanim" />
+    <item android:duration="50" android:drawable="@drawable/fifteenanim" />
+    <item android:duration="50" android:drawable="@drawable/sixteenanim" />
+    <item android:duration="50" android:drawable="@drawable/seventeenanim" />
+    <item android:duration="50" android:drawable="@drawable/eighteenanim" />
+    <item android:duration="50" android:drawable="@drawable/nineteenanim" />
+    <item android:duration="50" android:drawable="@drawable/twentyanim" />
+    <item android:duration="50" android:drawable="@drawable/twentyoneanim" />
+    <item android:duration="50" android:drawable="@drawable/twentytwoanim" />
+    <item android:duration="50" android:drawable="@drawable/twentythreeanim" />
+    <item android:duration="50" android:drawable="@drawable/twentyfouranim" />
+    <item android:duration="50" android:drawable="@drawable/twentyfiveanim" />
+    <item android:duration="50" android:drawable="@drawable/twentysixanim" />
+    <item android:duration="50" android:drawable="@drawable/twentysevenanim" />
+    <item android:duration="50" android:drawable="@drawable/twentyeightanim" />
+    <item android:duration="50" android:drawable="@drawable/twentynineanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtyanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtyoneanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtytwoanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtythreeanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtyfouranim" />
+    <item android:duration="50" android:drawable="@drawable/thirtyfiveanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtysixanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtysevenanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtyeightanim" />
+    <item android:duration="50" android:drawable="@drawable/thirtynineanim" />
+    <item android:duration="50" android:drawable="@drawable/fortyanim" />
+</animation-list>
