@@ -3,6 +3,7 @@ package com.application.ui.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.application.R;
+import com.application.ui.SearchModelBroadActivity;
+import com.application.ui.SearchResultsActivity;
 import com.application.ui.view.GPlusListAdapter;
 import com.application.ui.view.SpeedScrollListener;
 
@@ -67,6 +70,16 @@ public class SearchResultAdapter extends GPlusListAdapter {
 		}
 
 		holder.mImageView.setImageResource(defaultIcon[position%4]);
+		
+		holder.mImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent mIntent = new Intent(mContext, SearchModelBroadActivity.class);
+				mContext.startActivity(mIntent);
+			}
+		});
 		return v;
 
 	}

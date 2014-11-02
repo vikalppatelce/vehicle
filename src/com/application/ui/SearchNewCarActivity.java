@@ -86,7 +86,7 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 		materialMenu = (MaterialMenuView) mCustomView
 				.findViewById(R.id.action_bar_menu);
 		mTitle = (TextView)mCustomView.findViewById(R.id.action_bar_menu_title);
-		mTitle.setText("Search New Car");
+		mTitle.setText(getResources().getString(R.string.str_activity_search_new_car));
 		setSlideMenuListener();
 	}
 
@@ -114,6 +114,7 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 			public void onOpen() {
 				// TODO Auto-generated method stub
 				materialMenu.animateState(IconState.ARROW);
+				mTitle.setText(getResources().getString(R.string.app_name));
 			}
 		});
 
@@ -122,6 +123,7 @@ public class SearchNewCarActivity extends BaseSliderActivity {
 			public void onClose() {
 				// TODO Auto-generated method stub
 				materialMenu.animateState(IconState.BURGER);
+				mTitle.setText(getResources().getString(R.string.str_activity_search_new_car));
 			}
 		});
 	}

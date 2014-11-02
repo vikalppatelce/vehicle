@@ -10,4 +10,6 @@
     <string name="str_slide_menu_setting">Setting</string>
 	<string name="str_slide_menu_about">About</string>
 	<string name="str_slide_menu_feedback">Feedback</string>
+	<string name="str_activity_search_new_car">Search New Car</string>
+	<string name="str_activity_search_new_car_result">Results</string>
 </resources>

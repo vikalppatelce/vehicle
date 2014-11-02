@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="color_background">@android:color/darker_gray</color>
     <color name="color_search_header_text">#ffac0000</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+
 </resources>

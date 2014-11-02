@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/twentysevenanim" />
+
+        <com.application.ui.view.PagerSlidingTabStrip
+            android:id="@+id/pager_sliding_tab_strip"
+            android:layout_width="fill_parent"
+            android:layout_height="48dip"
+            android:layout_below="@id/imageview"
+            android:background="@drawable/background_tabs"
+            app:pstsIndicatorColor="@color/background_tab_pressed"
+            app:pstsTabPaddingLeftRight="14dip" />
+
+        <android.support.v4.view.ViewPager
+            android:layout_below="@id/pager_sliding_tab_strip"
+            android:id="@+id/pager"
+            android:layout_width="fill_parent"
+            android:layout_height="180dp"
+            android:minHeight="180dp" >
+        </android.support.v4.view.ViewPager>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/pager"
+            android:scaleType="centerInside"
+            android:src="@drawable/twentysevenanim" />
+    </RelativeLayout>
+
+</ScrollView>

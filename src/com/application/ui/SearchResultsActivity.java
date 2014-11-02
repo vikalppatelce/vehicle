@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,6 +57,7 @@ public class SearchResultsActivity extends BaseSliderActivity {
 
 		initUi();
 		setAdapters();
+		setUiEventListeners();
 
 		mProgressDialog = new VahanIndiaProgressDialog(this);
 		mProgressDialog.show();
@@ -154,6 +156,19 @@ public class SearchResultsActivity extends BaseSliderActivity {
 
 	private void initUi() {
 		mListView = (ListView) findViewById(R.id.activity_search_result_listview);
+	}
+	
+	private void setUiEventListeners(){
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent mIntent = new Intent(SearchResultsActivity.this, SearchModelBroadActivity.class);
+				startActivity(mIntent);
+			}
+		});
 	}
 
 	private void setAdapters() {

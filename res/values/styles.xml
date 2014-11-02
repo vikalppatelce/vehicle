@@ -2,21 +2,65 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="@style/Theme.Sherlock.Light.DarkActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <style name="Theme.Vahanindia" parent="@style/Theme.Sherlock.Light">
+        <item name="actionBarItemBackground">@drawable/selectable_background_vahanindia</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Vahanindia</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Vahanindia</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Vahanindia</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Vahanindia</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Vahanindia</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_vahanindia</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_vahanindia</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Vahanindia</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="ActionBar.Solid.Vahanindia" parent="@style/Widget.Sherlock.Light.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_vahanindia</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_vahanindia</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_vahanindia</item>
+        <item name="progressBarStyle">@style/ProgressBar.Vahanindia</item>
     </style>
 
+    <style name="ActionBar.Transparent.Vahanindia" parent="@style/Widget.Sherlock.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_vahanindia</item>
+        <item name="progressBarStyle">@style/ProgressBar.Vahanindia</item>
+    </style>
+
+    <style name="PopupMenu.Vahanindia" parent="@style/Widget.Sherlock.Light.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vahanindia</item>
+    </style>
+
+    <style name="DropDownListView.Vahanindia" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_vahanindia</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Vahanindia" parent="@style/Widget.Sherlock.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_vahanindia</item>
+    </style>
+
+    <style name="DropDownNav.Vahanindia" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_vahanindia</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vahanindia</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_vahanindia</item>
+    </style>
+
+    <style name="ProgressBar.Vahanindia" parent="@style/Widget.Sherlock.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_vahanindia</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Vahanindia" parent="@style/Widget.Sherlock.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_vahanindia</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Vahanindia.Widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/PopupMenu.Vahanindia</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Vahanindia</item>
+    </style>
+    <!--  -->
+    <!-- Custom Theme -->
     <style name="AppTheme_Slider_TextView">
         <item name="android:padding">7dp</item>
         <item name="android:textColor">@android:color/white</item>
@@ -55,6 +99,26 @@
 
     <style name="AppTheme_TextView_Bold">
         <item name="android:textStyle">bold</item>
+    </style>
+    <!--  -->
+    <style name="AndroidImageSlider_Corner_Oval_Orange">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/indicator_corner_bg</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="shape">oval</item>
+        <item name="padding_left">3dp</item>
+        <item name="padding_right">3dp</item>
+        <item name="padding_top">4dp</item>
+        <item name="padding_bottom">4dp</item>
+        <item name="selected_color">#f60</item>
+        <item name="unselected_color">#ffffff</item>
+        <item name="selected_width">6dp</item>
+        <item name="selected_height">6dp</item>
+        <item name="unselected_width">6dp</item>
+        <item name="unselected_height">6dp</item>
     </style>
 
 </resources>
